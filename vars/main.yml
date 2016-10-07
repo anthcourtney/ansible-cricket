@@ -1,0 +1,15 @@
+---
+
+teams:
+  - Australia
+  - India
+  - "South Africa"
+  - "West Indies"
+  - England
+  - "New Zealand"
+  - Pakistan
+  - "Sri Lanka"
+  - Bangladesh
+
+pause_between_deliveries_enabled: false
+pause_between_deliveries_seconds: 1

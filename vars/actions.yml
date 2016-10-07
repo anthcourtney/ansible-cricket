@@ -1,0 +1,48 @@
+---
+
+bowling:
+  deliveries:
+    pace:
+      yorker:
+        difficulty: 9
+        frequency: 1
+    spin:
+      orthodox:
+        difficulty: 2
+        frequency: 8
+      toppie:
+        difficulty: 8
+        frequency: 2
+      googly:
+        difficulty: 6
+        frequency: 4
+      flipper:
+        difficulty: 9
+        frequency: 2
+
+batting:
+  strokes:
+    leave:
+      frequency: 7
+      risk: 1
+    block:
+      frequency: 7
+      risk: 2
+    drive:
+      frequency: 5
+      risk: 5
+    slog:
+      frequency: 2
+      risk: 8
+    cut:
+      frequency: 4
+      risk: 6
+    hook:
+      frequency: 2
+      risk: 7
+    glance:
+      frequency: 5
+      risk: 3
+    pull:
+      frequency: 4
+      risk: 4

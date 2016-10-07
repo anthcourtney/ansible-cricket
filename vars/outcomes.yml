@@ -1,0 +1,17 @@
+---
+
+outcomes:
+  wicket:
+    likelihood: 0.4
+  0:
+    likelihood: 7
+  1:
+    likelihood: 5
+  2:
+    likelihood: 3
+  3:
+    likelihood: 1
+  4:
+    likelihood: 1
+  6:
+    likelihood: 0.2

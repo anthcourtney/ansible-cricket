@@ -1,0 +1,26 @@
+---
+
+  - name: Start of innings
+    debug:
+      msg: "Welcome back to the {{ ground_name }} for the start of the innings #{{ innings_number }}"
+
+  - name: Reset runs and wickets for start of innings
+    set_fact:
+      wickets: 0
+      runs: 0
+
+  - name: Bowl an over
+    include: "{{ playbook_dir }}/includes/over.yml"
+    with_items: "{{ range(0,number_of_overs)|list }}"
+    loop_control:
+      loop_var: "over_number"
+
+  - name: End of innings
+    debug:
+      msg: "That's the end of innings #{{ innings_number }}!"
+
+  - set_fact:
+      scorecard: "{{ scorecard|default({}) | combine({ innings_number: { 'runs': runs, 'wickets': wickets } }) }}"
+
+  - debug:
+      var: scorecard

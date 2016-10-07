@@ -1,0 +1,26 @@
+---
+
+# Delivery
+- set_fact:
+    outcome: "{{ outcomes | list | random }}"
+- set_fact:
+    wickets: "{{ wickets|default(0) | int + 1 }}"
+  when: outcome == "wicket"
+- set_fact:
+    runs: "{{ runs|default(0) | int + outcome|int }}"
+  when: outcome != "wicket"
+- set_fact:
+    score: "{{ runs|default(0) }}/{{ wickets|default(0) }}"
+- set_fact:
+    delivery:
+      over: "{{ over_number }}.{{ ball_number }}"
+      commentary: "The bowler has bowled a {{ bowling.deliveries.pace | list | random }} delivery to the batsman, who {{ batting.strokes | list | random }}s the delivery."
+      outcome: "{{ outcome }}"
+      score: "{{ score }}"
+
+- debug:
+    var: delivery
+
+- pause:
+    seconds: "{{ pause_between_deliveries_seconds }}"
+  when: pause_between_deliveries_enabled

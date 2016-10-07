@@ -1,0 +1,25 @@
+---
+
+- hosts: localhost
+  gather_facts: no
+
+  vars_files:
+    - vars/main.yml
+    - vars/match.yml
+    - vars/actions.yml
+    - vars/outcomes.yml
+
+  tasks:
+
+  - include: "{{ playbook_dir }}/includes/determine_teams.yml"
+
+  - debug:
+      msg: "Welcome to this exciting showdown between {{ team_1 }} and {{ team_2 }}"
+
+  - include: "{{ playbook_dir }}/includes/innings.yml"
+    with_items: "{{ range(1,3)|list }}"
+    loop_control:
+      loop_var: "innings_number"
+
+  - debug:
+      msg: "{% if scorecard.1.runs|int > scorecard.2.runs|int %}{{ team_1 }} win by {{ scorecard.1.runs | int - scorecard.2.runs | int }} runs{% else %}{{ team_2 }} win by {{ 10 - scorecard.2.wickets|int }} wickets{% endif %}"

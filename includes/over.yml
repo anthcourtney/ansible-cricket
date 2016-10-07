@@ -1,0 +1,11 @@
+---
+
+# An over
+
+- include: "{{ playbook_dir }}/includes/delivery.yml"
+  with_items: "{{ range(1,7) | list }}"
+  loop_control:
+    loop_var: ball_number
+  when:
+    - "{{ wickets|int }} < 10"
+    - "({{ innings_number }} == 1) or (({{ innings_number }} == 2) and (runs|int <= scorecard.1.runs|int))"

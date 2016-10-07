@@ -1,0 +1,9 @@
+---
+
+  - name: Determine Team 1
+    set_fact:
+      team_1: "{{ teams | random }}"
+
+  - name: Determine Team 2
+    set_fact:
+      team_2: "{{ teams | difference([team_1]) | random }}"
