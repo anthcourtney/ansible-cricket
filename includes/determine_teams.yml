@@ -2,8 +2,29 @@
 
   - name: Determine Team 1
     set_fact:
-      team_1: "{{ teams | random }}"
+      team:
+        1:
+          name: "{{ item }}"
+        2:
+          name: "{{ teams | difference([item]) | random }}"
+    with_random_choice: "{{ teams }}"
 
-  - name: Determine Team 2
+  - name: Load Team 1 Settings
     set_fact:
-      team_2: "{{ teams | difference([team_1]) | random }}"
+      team: "{{ team | combine({ 1: lookup('file', item) | from_yaml }, recursive=True) }}"
+    with_first_found:
+      - "vars/teams/{{ team.1.name }}.yml"
+      - "vars/teams/default.yml"
+    ignore_errors: false
+
+  - name: Load Team 2 settings
+    set_fact:
+      team: "{{ team | combine({ 2: lookup('file', item) | from_yaml }, recursive=True) }}"
+    with_first_found:
+      - "vars/teams/{{ team.2.name }}.yml"
+      - "vars/teams/default.yml"
+    ignore_errors: false
+
+  - debug:
+      var: team
+      verbosity: 2

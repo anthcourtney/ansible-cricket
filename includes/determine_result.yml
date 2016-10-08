@@ -1,0 +1,4 @@
+---
+
+- debug:
+    msg: "{% if scorecard.1.runs|int > scorecard.2.runs|int %}{{ team.1.name }} win by {{ scorecard.1.runs | int - scorecard.2.runs | int }} runs{% else %}{{ team.2.name }} win by {{ 10 - scorecard.2.wickets|int }} wickets{% endif %}"

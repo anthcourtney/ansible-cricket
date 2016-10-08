@@ -4,10 +4,27 @@
     debug:
       msg: "Welcome back to the {{ ground_name }} for the start of the innings #{{ innings_number }}"
 
-  - name: Reset runs and wickets for start of innings
+  - name: Reset variables
     set_fact:
-      wickets: 0
-      runs: 0
+      "{{ item.name }}": "{{ item.value }}"
+    with_list:
+      - { name: "wickets", value: 0 }
+      - { name: "runs", value: 0 }
+      - { name: "batting_order", value: !!null }
+
+  - name: Determine batting order based upon batting_order attribute
+    set_fact:
+      batting_order: "{{ team[innings_number].players|sort(attribute='batting_order') }}"
+    when: "{{ team[innings_number].players | selectattr('batting_order', 'defined') | list | length == 11 }}"
+
+  - name: Determine batting order when no batting_order attribute exists
+    set_fact:
+      batting_order: "{{ team[innings_number].players }}"
+    when: batting_order is not defined or batting_order|trim == ""
+
+  - debug:
+      var: batting_order
+      verbosity: 2
 
   - name: Bowl an over
     include: "{{ playbook_dir }}/includes/over.yml"

@@ -1,0 +1,14 @@
+---
+
+players:
+  - { name: "David Warner", batting_order: 1 }
+  - { name: "Aaron Finch", batting_order: 2 }
+  - { name: "Usman Khawaja", batting_order: 3 }
+  - { name: "Steven Smith", batting_order: 4 }
+  - { name: "Glenn Maxwell", batting_order: 5 }
+  - { name: "Mitchell Marsh", batting_order: 6 }
+  - { name: "Peter Nevill", batting_order: 8 }
+  - { name: "James Faulkner", batting_order: 7 }
+  - { name: "John Hastings", batting_order: 9 }
+  - { name: "Ashton Agar", batting_order: 10 }
+  - { name: "Josh Hazelwood", batting_order: 11 }
