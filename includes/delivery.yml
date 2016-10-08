@@ -3,23 +3,40 @@
 # Delivery
 - set_fact:
     outcome: "{{ outcomes | list | random }}"
-- set_fact:
-    wickets: "{{ wickets|default(0) | int + 1 }}"
+
+# If a wicket has fallen, then:
+- block:
+  # - Update the wickets total
+  - set_fact:
+      wickets: "{{ wickets|default(0) | int + 1 }}"
   when: outcome == "wicket"
-- set_fact:
-    runs: "{{ runs|default(0) | int + outcome|int }}"
+    
+# If a wicket hasn't fallen then:
+- block:
+  # - Update the runs total
+  - set_fact:
+      runs: "{{ runs|default(0) | int + outcome|int }}"
   when: outcome != "wicket"
+
 - set_fact:
     score: "{{ runs|default(0) }}/{{ wickets|default(0) }}"
 - set_fact:
     delivery:
       over: "{{ over_number }}.{{ ball_number }}"
+      batsman: "{{ current_batsmen[0].name }}"
       commentary: "The bowler has bowled a {{ bowling.deliveries.pace | list | random }} delivery to the batsman, who {{ batting.strokes | list | random }}s the delivery."
       outcome: "{{ outcome }}"
       score: "{{ score }}"
 
 - debug:
     var: delivery
+
+- name: Rotate strike if an odd number of runs were scored
+  set_fact:
+    current_batsmen: "{{ current_batsmen[::-1] }}"
+  when:
+    - outcome != "wicket" 
+    - "{{ outcome | int }} is odd"
 
 - pause:
     seconds: "{{ pause_between_deliveries_seconds }}"

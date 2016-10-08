@@ -16,15 +16,19 @@
     set_fact:
       batting_order: "{{ team[innings_number].players|sort(attribute='batting_order') }}"
     when: "{{ team[innings_number].players | selectattr('batting_order', 'defined') | list | length == 11 }}"
-
   - name: Determine batting order when no batting_order attribute exists
     set_fact:
       batting_order: "{{ team[innings_number].players }}"
     when: batting_order is not defined or batting_order|trim == ""
-
   - debug:
       var: batting_order
       verbosity: 2
+
+  - name: Identify pair of batsmen
+    set_fact:
+      current_batsmen: "{{ batting_order[0:2] }}"
+  - debug:
+      msg: "{{ current_batsmen[0].name }} and {{ current_batsmen[1].name }} will open the batting for {{ team[innings_number].name }}"
 
   - name: Bowl an over
     include: "{{ playbook_dir }}/includes/over.yml"
